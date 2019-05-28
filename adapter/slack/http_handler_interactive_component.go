@@ -78,7 +78,8 @@ func (h HTTPHandler) HandleInteractiveComponent(w http.ResponseWriter, r *http.R
 					return err
 				}
 				if actionName == "fix" {
-					if err := h.creatingQuestionnaireHandler.Execute(ctx, input); err != nil {
+					created, err := h.creatingQuestionnaireHandler.Execute(ctx, input)
+					if err != nil {
 						return err
 					}
 					return h.creatingQuestionnaireHandler.PrintFixed(
@@ -86,6 +87,7 @@ func (h HTTPHandler) HandleInteractiveComponent(w http.ResponseWriter, r *http.R
 						callback.Container.ChannelID,
 						null.StringFrom(callback.Container.MessageTS),
 						input,
+						string(created.ID()),
 					)
 				}
 				value := parseValue(action)

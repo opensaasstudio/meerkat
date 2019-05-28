@@ -2,6 +2,8 @@ package slack
 
 import (
 	"context"
+	"strconv"
+	"time"
 
 	"github.com/nlopes/slack"
 	"github.com/opensaasstudio/meerkat/domain"
@@ -23,6 +25,7 @@ func (h AnsweringHandler) PrintFixed(
 	}
 
 	blocks = append(blocks, slack.NewSectionBlock(plainText("answered: "+input.QuestionnaireTitle), nil, nil))
+	blocks = append(blocks, slack.NewContextBlock(strconv.FormatInt(time.Now().UnixNano(), 10)+"__questionnaireID", plainText("questionnaireID: "+input.QuestionnaireID)))
 
 	for _, answer := range input.Answers {
 		blocks = append(blocks, dividerBlock)

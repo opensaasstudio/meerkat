@@ -3,6 +3,8 @@ package slack
 import (
 	"context"
 	"fmt"
+	"strconv"
+	"time"
 
 	"github.com/nlopes/slack"
 	"github.com/opensaasstudio/meerkat/domain"
@@ -14,6 +16,7 @@ func (h CreatingQuestionnaireHandler) PrintFixed(
 	channelID string,
 	updateTargetID null.String,
 	input CreatingQuestionnaireHandlerInput,
+	questionnaireID string,
 ) domain.Error {
 	blocks := make([]slack.Block, 0, 10)
 
@@ -24,6 +27,7 @@ func (h CreatingQuestionnaireHandler) PrintFixed(
 	}
 
 	blocks = append(blocks, slack.NewSectionBlock(plainText("questionnaire is created: "+input.Title), nil, nil))
+	blocks = append(blocks, slack.NewContextBlock(strconv.FormatInt(time.Now().UnixNano(), 10)+"__questionnaireID", plainText("questionnaireID: "+questionnaireID)))
 
 	blocks = append(blocks, dividerBlock)
 

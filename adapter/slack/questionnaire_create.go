@@ -82,12 +82,11 @@ func (p CreatingQuestionnaireHandlerInput) ToUsecaseInput() application.Creating
 func (h CreatingQuestionnaireHandler) Execute(
 	ctx context.Context,
 	input CreatingQuestionnaireHandlerInput,
-) domain.Error {
-	_, err := h.usecase.Create(
+) (domain.Questionnaire, domain.Error) {
+	return h.usecase.Create(
 		ctx,
 		application.AdminDescriptor{},     // TODO
 		application.WorkspaceDescriptor{}, // TODO
 		input.ToUsecaseInput(),
 	)
-	return err
 }

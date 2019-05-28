@@ -32,7 +32,7 @@ func (h AnsweringHandler) RequestInput(
 	}
 
 	blocks = append(blocks, slack.NewSectionBlock(plainText(input.QuestionnaireTitle), nil, nil))
-	blocks = append(blocks, slack.NewContextBlock(callbackID+"__questionnaireID", plainText(input.QuestionnaireID)))
+	blocks = append(blocks, slack.NewContextBlock(callbackID+"__questionnaireID", plainText("questionnaireID: "+input.QuestionnaireID)))
 
 	blocks = append(blocks, dividerBlock)
 

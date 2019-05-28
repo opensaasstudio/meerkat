@@ -3,6 +3,8 @@ package slack
 import (
 	"context"
 	"fmt"
+	"strconv"
+	"time"
 
 	"github.com/nlopes/slack"
 	"github.com/opensaasstudio/meerkat/domain"
@@ -28,6 +30,7 @@ func (s Poster) Post(ctx context.Context, target domain.PostTargetSlack, questio
 		answerer.Name(),
 		questionnaire.Title(),
 	)), nil, nil))
+	blocks = append(blocks, slack.NewContextBlock(strconv.FormatInt(time.Now().UnixNano(), 10)+"__questionnaireID", plainText("questionnaireID: "+string(questionnaire.ID()))))
 
 	for i, answer := range answers {
 		blocks = append(blocks, dividerBlock)
