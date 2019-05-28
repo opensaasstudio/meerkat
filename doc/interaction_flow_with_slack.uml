@@ -1,0 +1,142 @@
+@startuml
+
+box "Slack UI"
+  actor User
+  boundary BotUser
+end box
+
+box "Meerkat Slack Adapter"
+  boundary EventAPIHandler
+  boundary InteractiveComponentAPIHandler
+  boundary SuggestionHandler
+  control InputHandler
+
+  control RequestInput
+  entity InputParam
+
+  database ParamStore
+end box
+
+User -> BotUser : Mention On Slack
+BotUser -> EventAPIHandler : app_mention event
+EventAPIHandler -> RequestInput
+
+loop
+  RequestInput -> User : Request Input by BlockElements
+
+  loop
+    User -> SuggestionHandler : Input BlockElement
+    User <-- SuggestionHandler : Suggestion
+  end
+
+  User -> InteractiveComponentAPIHandler : Input param
+
+  InteractiveComponentAPIHandler -> ParamStore : Fetch Existing InputParam
+  InteractiveComponentAPIHandler <-- ParamStore : Resotre InputParam
+
+  alt fix button pushed
+    note over InteractiveComponentAPIHandler : break;
+  else
+    InteractiveComponentAPIHandler -> InputHandler : HandleInput
+    InputHandler -> InputParam : HandleInput
+    InteractiveComponentAPIHandler <-- InputHandler : InputParam
+
+    InteractiveComponentAPIHandler -> ParamStore : Store InputParam
+
+    alt InputParam is fully filled
+      InteractiveComponentAPIHandler -> RequestInput : Request Input with fix button
+    else
+      InteractiveComponentAPIHandler -> RequestInput : Request Input
+    end
+  end
+end
+
+box "Meerkat Outbound Adapter"
+  control StoreAdapter
+  control SlackAdapter
+end box
+
+box "Outbound"
+  database Database
+end box
+
+box "Meerkat Application Layer"
+  control Usecase
+  control PostingService as PostingServiceImpl
+  control AskingService as AskingServiceImpl
+  control NotificationService as NotificationServiceImpl
+
+  boundary AuthorizationService
+  boundary Repository
+end box
+
+box "Meerkat Domain Layer"
+  entity DomainModel
+  control DomainService
+
+  boundary Searcher
+  boundary PostingService
+  boundary AskingService
+  boundary NotificationService
+end box
+
+InteractiveComponentAPIHandler -> Usecase : Execute Usecase
+
+opt
+  Usecase -> Repository : fetch Existing Entity
+  Repository -> StoreAdapter
+  StoreAdapter -> Database
+  StoreAdapter <-- Database
+  Repository <-- StoreAdapter
+  Usecase <-- Repository : Existing Entity
+end
+opt
+  Usecase -> Searcher : fetch Existing Entity
+  Searcher -> StoreAdapter
+  StoreAdapter -> Database
+  StoreAdapter <-- Database
+  Searcher <-- StoreAdapter
+  Usecase <-- Searcher : Existing Entity
+end
+
+opt
+  Usecase -> AuthorizationService : Authorization
+end
+
+opt
+  Usecase -> DomainModel : Command
+end
+opt
+  Usecase -> DomainService : Command
+end
+opt
+  Usecase -> Repository : Store or Delete
+  Repository -> StoreAdapter
+  StoreAdapter -> Database
+end
+opt
+  Usecase -> PostingService : Post
+  PostingService -> PostingServiceImpl : Execute
+  PostingServiceImpl -> SlackAdapter : Post to Slack
+  SlackAdapter -> User : Post Message
+end
+
+== Asking ==
+
+loop every 1 minute
+  -> Usecase : Execute AskingService
+  Usecase -> Searcher : Search target Questionnaires
+  Searcher -> StoreAdapter
+  StoreAdapter -> Database
+  StoreAdapter <-- Database
+  Searcher <-- StoreAdapter : target Qusetionnaires
+
+  Usecase -> AskingService : Execute Asking
+  AskingService -> AskingServiceImpl : Ask
+  AskingServiceImpl -> NotificationService : Notify
+  NotificationService -> NotificationServiceImpl : Execute
+  NotificationServiceImpl -> RequestInput : Post to Slack
+  RequestInput -> User : Request Input by BlockElements
+end loop
+
+@enduml

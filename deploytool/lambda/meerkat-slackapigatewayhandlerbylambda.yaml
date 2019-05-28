@@ -1,0 +1,13 @@
+name: "meerkat"
+region: "ap-northeast-1"
+role: "" # needs input
+memory: 128
+timeout: 900
+
+env:
+  MEERKAT_SLACK_TOKEN: "" # needs input
+  MEERKAT_SLACK_VARIFICATION_TOKEN: "" # needs input
+  MEERKAT_SLACK_LISTEN_ADDR: ":8080"
+  MEERKAT_AWS_REGION: "ap-northeast-1"
+  MEERKAT_USE_INMEMORY: "false"
+  DYNAMODB_TABLE_PREFIX: "meerkat"

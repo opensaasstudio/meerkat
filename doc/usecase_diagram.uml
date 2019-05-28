@@ -1,0 +1,29 @@
+@startuml
+
+left to right direction
+
+User <|-- Admin
+User <|-- Answerer
+
+rectangle setup {
+    Admin --> (Create Questionnaire)
+    Admin --> (Edit Questionnaire)
+
+    Admin --> (Create Answerer)
+    Admin --> (Add Answerer)
+    Admin --> (Remove Answerer)
+}
+
+:NotificationService:
+
+rectangle "ask and answer" {
+    NotificationService --> (Ask to Answerer)
+    Answerer --> (Answer)
+}
+
+rectangle "list log" {
+    Admin --> (List Answer log)
+    Answerer --> (List Answer log)
+}
+
+@enduml

@@ -1,0 +1,40 @@
+@startuml
+create actor admin
+
+== Create Questionnaire ==
+
+create questionnaire
+admin -> questionnaire: Create Questionnaire
+
+== Create Answerer ==
+
+create actor answerer
+admin -> answerer: Create Answerer
+
+== Add Answerer to Questionnaire ==
+
+create notificationTarget
+admin -> notificationTarget: Add Answerer
+note over notificationTarget
+    - answererID
+    - questionnaireID
+    - notificationTargetKind (e.g. slack)
+    - optionalInfo (e.g. channelID, userID)
+end note
+
+== Give Questionnaire to Answerers ==
+
+loop
+    notificationService -> questionnaire: check nextTime
+    notificationService -> notificationTarget: fetch targets
+    notificationService <-- notificationTarget: notification targets
+    notificationService -> : notify
+end
+
+== Answer ==
+
+answerer <-- : notified
+answerer -> questionnaire: Answer
+questionnaire -> : post to integration targets
+
+@enduml
