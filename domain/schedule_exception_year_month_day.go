@@ -17,7 +17,7 @@ type YearMonthDayScheduleException struct {
 }
 
 func (s YearMonthDayScheduleException) NeedsIgnore(t time.Time) bool {
-	left := time.Date(int(s.year), s.month, int(s.day), 0, 0, 0, 0, time.FixedZone(strconv.Itoa(s.locOffset), s.locOffset))
+	left := time.Date(int(s.year), s.month, int(s.day), 0, 0, 0, 0, time.FixedZone(strconv.Itoa(s.locOffset), s.locOffset*60*60))
 	return !t.Before(left) && t.Before(left.AddDate(0, 0, 1))
 }
 

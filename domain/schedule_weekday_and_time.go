@@ -24,7 +24,7 @@ type WeekdayAndTimeSchedule struct {
 }
 
 func (s WeekdayAndTimeSchedule) NextTime(baseTime time.Time) time.Time {
-	loc := time.FixedZone(strconv.Itoa(s.LocOffset()), s.LocOffset())
+	loc := time.FixedZone(strconv.Itoa(s.LocOffset()), s.LocOffset()*60*60)
 	t := baseTime.In(loc)
 	t = time.Date(t.Year(), t.Month(), t.Day(), int(s.hour), int(s.minute), int(s.sec), 0, loc)
 	if !t.After(baseTime) {
@@ -38,7 +38,7 @@ func (s WeekdayAndTimeSchedule) NextTime(baseTime time.Time) time.Time {
 }
 
 func (s WeekdayAndTimeSchedule) PrevTime(baseTime time.Time) time.Time {
-	loc := time.FixedZone(strconv.Itoa(s.LocOffset()), s.LocOffset())
+	loc := time.FixedZone(strconv.Itoa(s.LocOffset()), s.LocOffset()*60*60)
 	t := baseTime.In(loc)
 	t = time.Date(t.Year(), t.Month(), t.Day(), int(s.hour), int(s.minute), int(s.sec), 0, loc)
 	if !t.Before(baseTime) {
@@ -52,7 +52,7 @@ func (s WeekdayAndTimeSchedule) PrevTime(baseTime time.Time) time.Time {
 }
 
 func (s WeekdayAndTimeSchedule) needsIgnore(t time.Time) bool {
-	switch t.In(time.FixedZone(strconv.Itoa(s.LocOffset()), s.LocOffset())).Weekday() {
+	switch t.In(time.FixedZone(strconv.Itoa(s.LocOffset()), s.LocOffset()*60*60)).Weekday() {
 	case time.Monday:
 		return !s.mon
 	case time.Tuesday:
