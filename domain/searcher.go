@@ -14,6 +14,7 @@ type NotificationTargetSearcher interface {
 type QuestionnaireSearcher interface {
 	SearchExecutionNeeded(ctx context.Context) ([]Questionnaire, Error)
 	FetchAll(ctx context.Context) ([]Questionnaire, Error)
+	FindByID(ctx context.Context, id QuestionnaireID) (questionnaire Questionnaire, version int, derr Error)
 }
 
 type AnswererSearcher interface {

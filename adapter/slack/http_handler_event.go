@@ -1,14 +1,17 @@
 package slack
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/hori-ryota/zaperr"
 	"github.com/nlopes/slack/slackevents"
+	"github.com/opensaasstudio/meerkat/domain"
 	"go.uber.org/zap"
 	"gopkg.in/guregu/null.v3"
 )
@@ -43,16 +46,38 @@ func (h HTTPHandler) HandleEvent(w http.ResponseWriter, r *http.Request) {
 					text = strings.TrimPrefix(text, "Reminder: ")
 					text = strings.TrimSuffix(text, ".")
 				}
-				texts := strings.SplitN(text, " ", 2)
+				texts := strings.Split(text, " ")
 				if len(texts) == 1 {
 					return nil
 				}
 				commandName := texts[1]
 				switch commandName {
 				case "createQuestionnaire":
-					callbackID := "CreatingQuestionnaire_" + innerEvent.EventTimeStamp.String()
-					input := CreatingQuestionnaireHandlerInput{}
-					if err := h.creatingQuestionnaireHandler.RequestInput(
+					callbackID := "EditingQuestionnaire_" + innerEvent.EventTimeStamp.String()
+					input := EditingQuestionnaireHandlerInput{}
+					if err := h.editingQuestionnaireHandler.RequestInput(
+						ctx, innerEvent.Channel, null.String{}, callbackID, input,
+					); err != nil {
+						return err
+					}
+				case "editQuestionnaire":
+					callbackID := "EditingQuestionnaire_" + innerEvent.EventTimeStamp.String()
+					input := EditingQuestionnaireHandlerInput{}
+
+					if len(texts) < 3 {
+						return nil
+					}
+					questionnaireID := texts[2]
+					existing, _, err := h.questionnaireSearcher.FindByID(ctx, domain.QuestionnaireID(questionnaireID))
+					if err != nil {
+						return err
+					}
+					input.FromDomainObject(existing)
+					if err := h.paramStore.Store(context.TODO(), callbackID, input, 30*time.Minute); err != nil {
+						return err
+					}
+
+					if err := h.editingQuestionnaireHandler.RequestInput(
 						ctx, innerEvent.Channel, null.String{}, callbackID, input,
 					); err != nil {
 						return err

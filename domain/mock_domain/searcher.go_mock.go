@@ -117,6 +117,22 @@ func (mr *MockQuestionnaireSearcherMockRecorder) FetchAll(ctx interface{}) *gomo
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FetchAll", reflect.TypeOf((*MockQuestionnaireSearcher)(nil).FetchAll), ctx)
 }
 
+// FindByID mocks base method
+func (m *MockQuestionnaireSearcher) FindByID(ctx context.Context, id domain.QuestionnaireID) (domain.Questionnaire, int, domain.Error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "FindByID", ctx, id)
+	ret0, _ := ret[0].(domain.Questionnaire)
+	ret1, _ := ret[1].(int)
+	ret2, _ := ret[2].(domain.Error)
+	return ret0, ret1, ret2
+}
+
+// FindByID indicates an expected call of FindByID
+func (mr *MockQuestionnaireSearcherMockRecorder) FindByID(ctx, id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByID", reflect.TypeOf((*MockQuestionnaireSearcher)(nil).FindByID), ctx, id)
+}
+
 // MockAnswererSearcher is a mock of AnswererSearcher interface
 type MockAnswererSearcher struct {
 	ctrl     *gomock.Controller

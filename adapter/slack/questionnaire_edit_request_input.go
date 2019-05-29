@@ -10,12 +10,12 @@ import (
 	"gopkg.in/guregu/null.v3"
 )
 
-func (h CreatingQuestionnaireHandler) RequestInput(
+func (h EditingQuestionnaireHandler) RequestInput(
 	ctx context.Context,
 	channelID string,
 	updateTargetID null.String,
 	callbackID string,
-	input CreatingQuestionnaireHandlerInput,
+	input EditingQuestionnaireHandlerInput,
 ) domain.Error {
 	blocks := make([]slack.Block, 0, 10)
 

@@ -72,31 +72,31 @@ func (h HTTPHandler) HandleInteractiveComponent(w http.ResponseWriter, r *http.R
 			callbackID := ai[0]
 			actionName := ai[1]
 			switch strings.SplitN(callbackID, "_", 2)[0] {
-			case "CreatingQuestionnaire":
-				input := CreatingQuestionnaireHandlerInput{}
+			case "EditingQuestionnaire":
+				input := EditingQuestionnaireHandlerInput{}
 				if err := h.paramStore.Restore(context.TODO(), callbackID, &input); err != nil {
 					return err
 				}
 				if actionName == "fix" {
-					created, err := h.creatingQuestionnaireHandler.Execute(ctx, input)
+					editted, err := h.editingQuestionnaireHandler.Execute(ctx, input)
 					if err != nil {
 						return err
 					}
-					return h.creatingQuestionnaireHandler.PrintFixed(
+					return h.editingQuestionnaireHandler.PrintFixed(
 						ctx,
 						callback.Container.ChannelID,
 						null.StringFrom(callback.Container.MessageTS),
 						input,
-						string(created.ID()),
+						string(editted.ID()),
 					)
 				}
 				value := parseValue(action)
 
-				input, err = h.creatingQuestionnaireHandler.HandleCreatingQuestionnaire(ctx, input, actionName, value)
+				input, err = h.editingQuestionnaireHandler.HandleEditingQuestionnaire(ctx, input, actionName, value)
 				if err != nil {
 					return err
 				}
-				if err := h.creatingQuestionnaireHandler.RequestInput(
+				if err := h.editingQuestionnaireHandler.RequestInput(
 					ctx,
 					callback.Container.ChannelID,
 					null.StringFrom(callback.Container.MessageTS),

@@ -317,3 +317,15 @@ func (m WeekdayAndTimeSchedule) Sat() bool {
 func (m WeekdayAndTimeSchedule) Sun() bool {
 	return m.sun
 }
+
+func (m Schedules) ScheduleKind() ScheduleKind {
+	return m.scheduleKind
+}
+
+func (m Schedules) Schedules() []Schedule {
+	return m.schedules
+}
+
+func (m Schedules) Exceptions() []ScheduleException {
+	return m.exceptions
+}

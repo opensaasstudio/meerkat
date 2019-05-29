@@ -213,3 +213,25 @@ func NewReplacingQuestionsUsecaseInput(
 		questionItems:   questionItems,
 	}
 }
+
+func NewUpdatingQuestionnaireUsecase(
+	repository QuestionnaireRepository,
+	questionIDProvider QuestionIDProvider,
+	authorizationService UpdatingQuestionnaireAuthorizationService,
+) UpdatingQuestionnaireUsecase {
+	return UpdatingQuestionnaireUsecase{
+		repository:           repository,
+		questionIDProvider:   questionIDProvider,
+		authorizationService: authorizationService,
+	}
+}
+
+func NewUpdatingQuestionnaireUsecaseInput(
+	questionnaireID domain.QuestionnaireID,
+	creatingInput CreatingQuestionnaireUsecaseInput,
+) UpdatingQuestionnaireUsecaseInput {
+	return UpdatingQuestionnaireUsecaseInput{
+		questionnaireID: questionnaireID,
+		creatingInput:   creatingInput,
+	}
+}

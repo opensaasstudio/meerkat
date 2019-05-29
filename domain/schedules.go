@@ -5,9 +5,9 @@ import "time"
 const ScheduleKindSchedules = "schedules"
 
 type Schedules struct {
-	scheduleKind ScheduleKind
-	schedules    []Schedule
-	exceptions   []ScheduleException
+	scheduleKind ScheduleKind        `getter:""`
+	schedules    []Schedule          `getter:""`
+	exceptions   []ScheduleException `getter:""`
 }
 
 func NewSchedules(
@@ -62,10 +62,6 @@ func (s Schedules) PrevTime(baseTime time.Time) time.Time {
 		latest = prevTime
 	}
 	return latest
-}
-
-func (s Schedules) ScheduleKind() ScheduleKind {
-	return s.scheduleKind
 }
 
 func (s Schedules) Dump() ScheduleValue {

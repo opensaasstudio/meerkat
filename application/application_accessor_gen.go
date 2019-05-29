@@ -101,3 +101,11 @@ func (m ReplacingQuestionsUsecaseInput) QuestionnaireID() domain.QuestionnaireID
 func (m ReplacingQuestionsUsecaseInput) QuestionItems() []QuestionItem {
 	return m.questionItems
 }
+
+func (m UpdatingQuestionnaireUsecaseInput) QuestionnaireID() domain.QuestionnaireID {
+	return m.questionnaireID
+}
+
+func (m UpdatingQuestionnaireUsecaseInput) CreatingInput() CreatingQuestionnaireUsecaseInput {
+	return m.creatingInput
+}

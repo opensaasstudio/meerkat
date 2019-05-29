@@ -34,22 +34,22 @@ func NewHTTPHandler(
 	logger *zap.Logger,
 	questionnaireSearcher domain.QuestionnaireSearcher,
 	answererSearcher domain.AnswererSearcher,
-	creatingQuestionnaireHandler CreatingQuestionnaireHandler,
+	editingQuestionnaireHandler EditingQuestionnaireHandler,
 	creatingAnswererHandler CreatingAnswererHandler,
 	addingAnswererHandler AddingAnswererHandler,
 	answeringHandler AnsweringHandler,
 	paramStore ParamStore,
 ) HTTPHandler {
 	return HTTPHandler{
-		slackVerificationToken:       slackVerificationToken,
-		logger:                       logger,
-		questionnaireSearcher:        questionnaireSearcher,
-		answererSearcher:             answererSearcher,
-		creatingQuestionnaireHandler: creatingQuestionnaireHandler,
-		creatingAnswererHandler:      creatingAnswererHandler,
-		addingAnswererHandler:        addingAnswererHandler,
-		answeringHandler:             answeringHandler,
-		paramStore:                   paramStore,
+		slackVerificationToken:      slackVerificationToken,
+		logger:                      logger,
+		questionnaireSearcher:       questionnaireSearcher,
+		answererSearcher:            answererSearcher,
+		editingQuestionnaireHandler: editingQuestionnaireHandler,
+		creatingAnswererHandler:     creatingAnswererHandler,
+		addingAnswererHandler:       addingAnswererHandler,
+		answeringHandler:            answeringHandler,
+		paramStore:                  paramStore,
 	}
 }
 
@@ -71,12 +71,14 @@ func NewAddingAnswererHandler(
 	}
 }
 
-func NewCreatingQuestionnaireHandler(
+func NewEditingQuestionnaireHandler(
 	slackClient *slack.Client,
-	usecase application.CreatingQuestionnaireUsecase,
-) CreatingQuestionnaireHandler {
-	return CreatingQuestionnaireHandler{
-		slackClient: slackClient,
-		usecase:     usecase,
+	creatingQuestionnaireUsecase application.CreatingQuestionnaireUsecase,
+	updatingQuestionnaireUsecase application.UpdatingQuestionnaireUsecase,
+) EditingQuestionnaireHandler {
+	return EditingQuestionnaireHandler{
+		slackClient:                  slackClient,
+		creatingQuestionnaireUsecase: creatingQuestionnaireUsecase,
+		updatingQuestionnaireUsecase: updatingQuestionnaireUsecase,
 	}
 }

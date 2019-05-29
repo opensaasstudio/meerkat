@@ -84,6 +84,11 @@ func main() {
 		ulidProvider,
 		authorization.NewService(),
 	)
+	updatingQuestionnaireUsecase := application.NewUpdatingQuestionnaireUsecase(
+		questionnaireRepository,
+		ulidProvider,
+		authorization.NewService(),
+	)
 
 	creatingAnswererUsecase := application.NewCreatingAnswererUsecase(
 		answererRepository,
@@ -108,7 +113,7 @@ func main() {
 		logger,
 		questionnaireSearcher,
 		answererSearcher,
-		slack.NewCreatingQuestionnaireHandler(slackClient, creatingQuestionnaireUsecase),
+		slack.NewEditingQuestionnaireHandler(slackClient, creatingQuestionnaireUsecase, updatingQuestionnaireUsecase),
 		slack.NewCreatingAnswererHandler(slackClient, creatingAnswererUsecase),
 		slack.NewAddingAnswererHandler(slackClient, addingAnswererUsecase),
 		slack.NewAnsweringHandler(slackClient, answeringUsecase),

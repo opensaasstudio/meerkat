@@ -15,3 +15,8 @@ type Service struct {
 func (s Service) CanCreateQuestionnaire(ctx context.Context, adminDescriptor application.AdminDescriptor, workspaceDescriptor application.WorkspaceDescriptor) (bool, domain.Error) {
 	return true, nil
 }
+
+// TODO implement
+func (s Service) CanUpdateQuestionnaire(ctx context.Context, qestionnaire domain.Questionnaire, adminDescriptor application.AdminDescriptor, workspaceDescriptor application.WorkspaceDescriptor) (bool, domain.Error) {
+	return true, nil
+}

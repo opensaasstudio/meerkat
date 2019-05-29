@@ -11,12 +11,12 @@ import (
 	"github.com/pkg/errors"
 )
 
-func (h CreatingQuestionnaireHandler) HandleCreatingQuestionnaire(
+func (h EditingQuestionnaireHandler) HandleEditingQuestionnaire(
 	ctx context.Context,
-	input CreatingQuestionnaireHandlerInput,
+	input EditingQuestionnaireHandlerInput,
 	actionName string,
 	value string,
-) (CreatingQuestionnaireHandlerInput, domain.Error) {
+) (EditingQuestionnaireHandlerInput, domain.Error) {
 	switch {
 	case actionName == "title":
 		input.Title = value

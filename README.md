@@ -24,7 +24,8 @@ Meerkat
     - [x] ScheduleException
         - [x] YearMonthDayScheduleException
     - [x] PostTarget
-- [ ] EditQuestionnaire
+- [x] EditQuestionnaire
+- [ ] DisableQuestionnaire
 - [x] CreateAnswerer
 - [ ] RemoveAnswerer
 - [ ] Authorization
@@ -46,6 +47,7 @@ Meerkat
 Use AppMentionEvent
 
 - `@meerkat createQuestionnaire`
+- `@meerkat editQuestionnaire {questionnaireID}`
 - `@meerkat createAnswerer`
 - `@meerkat addAnswerer`
 

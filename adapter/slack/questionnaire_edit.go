@@ -10,9 +10,10 @@ import (
 )
 
 //genconstructor
-type CreatingQuestionnaireHandler struct {
-	slackClient *slack.Client                            `required:""`
-	usecase     application.CreatingQuestionnaireUsecase `required:""`
+type EditingQuestionnaireHandler struct {
+	slackClient                  *slack.Client                            `required:""`
+	creatingQuestionnaireUsecase application.CreatingQuestionnaireUsecase `required:""`
+	updatingQuestionnaireUsecase application.UpdatingQuestionnaireUsecase `required:""`
 }
 
 type Question struct {
@@ -21,14 +22,15 @@ type Question struct {
 	Required bool
 }
 
-type CreatingQuestionnaireHandlerInput struct {
+type EditingQuestionnaireHandlerInput struct {
+	ID          string
 	Title       string
 	Questions   []Question
 	Schedules   Schedules
 	PostTargets PostTargets
 }
 
-func (p CreatingQuestionnaireHandlerInput) ToUsecaseInput() application.CreatingQuestionnaireUsecaseInput {
+func (p EditingQuestionnaireHandlerInput) ToCreatingUsecaseInput() application.CreatingQuestionnaireUsecaseInput {
 	questions := make([]application.QuestionItem, len(p.Questions))
 	for i, q := range p.Questions {
 		questions[i] = application.NewQuestionItem(
@@ -67,26 +69,46 @@ func (p CreatingQuestionnaireHandlerInput) ToUsecaseInput() application.Creating
 	return input
 }
 
-// func (p *CreatingQuestionnaireHandlerInput) FromUsecaseInput(up application.CreatingQuestionnaireUsecaseInput) {
-// 	p.Questions = make([]Question, len(up.QuestionItems()))
-// 	for i, q := range up.QuestionItems() {
-// 		p.Questions[i] = Question{
-// 			ID:       string(q.Question().ID()),
-// 			Text:     q.Question().Text(),
-// 			Required: q.Required(),
-// 		}
-// 	}
-// 	p.Title = up.Title()
-// }
+func (p EditingQuestionnaireHandlerInput) ToUpdatingUsecaseInput() application.UpdatingQuestionnaireUsecaseInput {
+	return application.NewUpdatingQuestionnaireUsecaseInput(
+		domain.QuestionnaireID(p.ID),
+		p.ToCreatingUsecaseInput(),
+	)
+}
 
-func (h CreatingQuestionnaireHandler) Execute(
+func (p *EditingQuestionnaireHandlerInput) FromDomainObject(questionnaire domain.Questionnaire) {
+	p.ID = string(questionnaire.ID())
+	p.Title = questionnaire.Title()
+	p.Questions = make([]Question, len(questionnaire.QuestionItems()))
+	for i, q := range questionnaire.QuestionItems() {
+		p.Questions[i] = Question{
+			ID:       string(q.Question().ID()),
+			Text:     q.Question().Text(),
+			Required: q.Required(),
+		}
+	}
+	p.Schedules = RestoreSchedulesFromDomainObject(questionnaire.Schedule())
+	for i := range questionnaire.PostTargets() {
+		p.PostTargets = p.PostTargets.Merge(RestorePostTargetFromDomainObject(questionnaire.PostTargets()[i]))
+	}
+}
+
+func (h EditingQuestionnaireHandler) Execute(
 	ctx context.Context,
-	input CreatingQuestionnaireHandlerInput,
+	input EditingQuestionnaireHandlerInput,
 ) (domain.Questionnaire, domain.Error) {
-	return h.usecase.Create(
+	if input.ID == "" {
+		return h.creatingQuestionnaireUsecase.Create(
+			ctx,
+			application.AdminDescriptor{},     // TODO
+			application.WorkspaceDescriptor{}, // TODO
+			input.ToCreatingUsecaseInput(),
+		)
+	}
+	return h.updatingQuestionnaireUsecase.Update(
 		ctx,
 		application.AdminDescriptor{},     // TODO
 		application.WorkspaceDescriptor{}, // TODO
-		input.ToUsecaseInput(),
+		input.ToUpdatingUsecaseInput(),
 	)
 }

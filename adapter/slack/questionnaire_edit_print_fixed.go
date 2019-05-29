@@ -11,11 +11,11 @@ import (
 	"gopkg.in/guregu/null.v3"
 )
 
-func (h CreatingQuestionnaireHandler) PrintFixed(
+func (h EditingQuestionnaireHandler) PrintFixed(
 	ctx context.Context,
 	channelID string,
 	updateTargetID null.String,
-	input CreatingQuestionnaireHandlerInput,
+	input EditingQuestionnaireHandlerInput,
 	questionnaireID string,
 ) domain.Error {
 	blocks := make([]slack.Block, 0, 10)
