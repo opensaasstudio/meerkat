@@ -29,7 +29,7 @@ Meerkat
 - [x] CreateAnswerer
 - [ ] RemoveAnswerer
 - [ ] Authorization
-- [x] [NotifiationAnswerer](./adapter/cmd/ask_all_if_needed)
+- [x] [Ask Answers (Notify)](./adapter/cmd/ask_all_if_needed)
     - [ ] deploy
     - [ ] execute every 1 minutes
 - [x] PostAnswer
