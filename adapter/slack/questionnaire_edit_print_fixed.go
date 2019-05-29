@@ -64,6 +64,11 @@ func (h EditingQuestionnaireHandler) PrintFixed(
 		}
 		blocks = append(blocks, slack.NewSectionBlock(plainText(text), nil, nil))
 	}
+	for _, s := range input.Schedules.YearMonthDayScheduleExceptions {
+		blocks = append(blocks, dividerBlock)
+		text := fmt.Sprintf("YearMonthDayScheduleExceptions: %04d/%02d/%02d (tz=%02d)", s.Year, s.Month, s.Day, s.Timezone)
+		blocks = append(blocks, slack.NewSectionBlock(plainText(text), nil, nil))
+	}
 	for _, t := range input.PostTargets.SlackPostTargets {
 		blocks = append(blocks, dividerBlock)
 		text := fmt.Sprintf("Slack PostTarget: %s", t.ChannelID)
