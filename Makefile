@@ -11,6 +11,9 @@ install_tools:
 go_dep:
 	dep ensure
 
+.PHONY: deploy
+deploy: deploy_slackapigatewayhandlerbylambda deploy_askallifneeded
+
 .PHONY: deploy_slackapigatewayhandlerbylambda
 deploy_slackapigatewayhandlerbylambda:
 	GOOS=linux GOARCH=amd64 go build -o build/meerkat-slackapigatewayhandlerbylambda ./adapter/slack/cmd/meerkat-slackapigatewayhandlerbylambda
