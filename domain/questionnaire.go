@@ -67,6 +67,7 @@ type QuestionnaireValue struct {
 	PostTargets   []PostTargetValue
 	LastExecuted  time.Time
 	NextTime      time.Time
+	NextTimeUnix  int64
 }
 
 func (m Questionnaire) Dump() QuestionnaireValue {
@@ -89,6 +90,7 @@ func (m Questionnaire) Dump() QuestionnaireValue {
 		PostTargets:   postTargets,
 		LastExecuted:  m.LastExecuted(),
 		NextTime:      m.Schedule().NextTime(m.LastExecuted()),
+		NextTimeUnix:  m.Schedule().NextTime(m.LastExecuted()).Unix(),
 	}
 }
 
