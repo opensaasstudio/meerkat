@@ -1,6 +1,15 @@
-init:
+.PHONY: init
+init: go_dep
 	mkdir -p ./gitignored/deployconfig
 	cp -n -v ./deploytool/**/*.yaml ./gitignored/deployconfig/ || true
+
+.PHONY: install_tools
+install_tools:
+	go get github.com/golang/dep/cmd/dep
+
+.PHONY: go_dep
+go_dep:
+	dep ensure
 
 .PHONY: deploy_slackapigatewayhandlerbylambda
 deploy_slackapigatewayhandlerbylambda:
