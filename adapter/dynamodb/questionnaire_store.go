@@ -109,7 +109,7 @@ func (r *QuestionnaireStore) FindByID(ctx context.Context, id domain.Questionnai
 
 func (r *QuestionnaireStore) SearchExecutionNeeded(ctx context.Context) ([]domain.Questionnaire, domain.Error) {
 	var items []questionnaireItem
-	if err := r.db.Table(r.tableName).Scan().Filter("NextTime <= ?", r.nowFunc()).AllWithContext(ctx, &items); err != nil {
+	if err := r.db.Table(r.tableName).Scan().Filter("NextTimeUnix <= ?", r.nowFunc().Unix()).AllWithContext(ctx, &items); err != nil {
 		if err == dynamo.ErrNotFound {
 			return nil, domain.ErrorNotFound(err)
 		}

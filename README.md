@@ -58,8 +58,11 @@ Use AppMentionEvent
 
 1. create slack apps [https://api.slack.com/apps?new_app=1](https://api.slack.com/apps?new_app=1)
     - allow scope ( `chat:write:bot`, `bot` )
-2. init conf yaml [./deploytool/lambda/meerkat-slackapigatewayhandlerbylambda.yaml](./deploytool/lambda/meerkat-slackapigatewayhandlerbylambda.yaml)
+2. initialize conf yaml
+    - `make init`
+    - edit yamls [./gitignored/deployconfg/](./gitignored/deployconfg/)
 3. deploy by [./deploytool/lambda/deploy.go](./deploytool/lambda/deploy.go)
+    - `make deploy`
 4. setup API Gateway
     - setup path for [./adapter/slack/cmd/meerkat-slackapigatewayhandlerbylambda](./adapter/slack/cmd/meerkat-slackapigatewayhandlerbylambda/main.go)
         - `/slack/suggestion`
@@ -75,4 +78,5 @@ Use AppMentionEvent
     - Bot Users
 6. create DynamoDB Tables
     - [./adapter/cmd/create_dynamodb_table](./adapter/cmd/create_dynamodb_table)
-6. TODO: setup NotificationService execution with [./adapter/cmd/ask_all_if_needed](./adapter/cmd/ask_all_if_needed)
+7. setup NotificationService execution with [./adapter/cmd/ask_all_if_needed](./adapter/cmd/ask_all_if_needed)
+    - https://docs.aws.amazon.com/lambda/latest/dg/tutorial-scheduled-events-schedule-expressions.html
