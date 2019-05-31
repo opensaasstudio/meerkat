@@ -23,3 +23,7 @@ deploy_slackapigatewayhandlerbylambda:
 deploy_askallifneeded:
 	GOOS=linux GOARCH=amd64 go build -o build/meerkat-askallifneeded ./adapter/cmd/ask_all_if_needed
 	cat build/meerkat-askallifneeded | go run ./deploytool/lambda/deploy.go --configFile ./gitignored/deployconfig/meerkat-askallifneeded.yaml
+
+.PHONY:
+test:
+	go test -v ./...
