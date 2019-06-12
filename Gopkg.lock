@@ -11,11 +11,11 @@
     "lambdacontext",
   ]
   pruneopts = "NUT"
-  revision = "6e3671ae53de51752c684359a3ab3152a2b35283"
-  version = "v1.11.0"
+  revision = "4c210d7623089d36b6bb6febf5a5e553bf73fbfb"
+  version = "v1.11.1"
 
 [[projects]]
-  digest = "1:570929a6bf4e63ed80d4fa9342900f75e9a2742e6bc63663d33c1f4efe92a46a"
+  digest = "1:acb050e1be835cc0d5d11f699c8097c0972726c2dbd7b9a00e78d0dbb33c0395"
   name = "github.com/aws/aws-sdk-go"
   packages = [
     "aws",
@@ -57,8 +57,8 @@
     "service/sts",
   ]
   pruneopts = "NUT"
-  revision = "1badbda38516ecb9e6157b85064bf7058ca9f0dc"
-  version = "v1.19.40"
+  revision = "54fbc97aa845c26cccf06231baa55a3d6b813e23"
+  version = "v1.19.48"
 
 [[projects]]
   digest = "1:cdee563173093e5ae7ab2a19c298e0904129719e1919a3c532b7bb0c3398b818"
@@ -135,8 +135,8 @@
   version = "v1.4.0"
 
 [[projects]]
-  branch = "feature/add-fields-for-other-select-block-type"
-  digest = "1:be0224713090eec07b1e75c1923f4f084726bacf8f8f85afa77bc1e9c09a61c0"
+  branch = "master"
+  digest = "1:19bf45747400f79bddbcad1dfd2c5cea46d1cbf3a65d1246af5e28882590549e"
   name = "github.com/nlopes/slack"
   packages = [
     ".",
@@ -146,8 +146,7 @@
     "slackutilsx",
   ]
   pruneopts = "NUT"
-  revision = "90df9a2a98fe26f24e726915b37547b53cf5d3ee"
-  source = "github.com/hori-ryota/slack"
+  revision = "a05dfd3f167d3e1d4b58c7412094ac39cb3099ed"
 
 [[projects]]
   digest = "1:f2052f4354e87a0ce0b16b55586b8d34d502d164d56d5d4397afae37f3330c42"
@@ -218,7 +217,7 @@
   name = "golang.org/x/net"
   packages = ["context"]
   pruneopts = "NUT"
-  revision = "f3200d17e092c607f615320ecaad13d87ad9a2b3"
+  revision = "3f473d35a33aa6fdd203e306dc439b797820e3f1"
 
 [[projects]]
   digest = "1:472b7f0500c4dcd855922c379f779f8d4787d2e03ce7ee080cb22b415635b6a8"

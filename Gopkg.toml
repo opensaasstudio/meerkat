@@ -23,9 +23,8 @@
   version = "1.4.0"
 
 [[constraint]]
+  branch = "master"
   name = "github.com/nlopes/slack"
-  branch = "feature/add-fields-for-other-select-block-type"
-  source = "github.com/hori-ryota/slack"
 
 [[constraint]]
   name = "github.com/oklog/ulid"
