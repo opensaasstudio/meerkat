@@ -15,7 +15,7 @@
   version = "v1.11.1"
 
 [[projects]]
-  digest = "1:acb050e1be835cc0d5d11f699c8097c0972726c2dbd7b9a00e78d0dbb33c0395"
+  digest = "1:14a5a4dab7b7cc8c1243dd6c00707ae1b4e5293befc3876a2dabc5711be15053"
   name = "github.com/aws/aws-sdk-go"
   packages = [
     "aws",
@@ -57,8 +57,8 @@
     "service/sts",
   ]
   pruneopts = "NUT"
-  revision = "54fbc97aa845c26cccf06231baa55a3d6b813e23"
-  version = "v1.19.48"
+  revision = "a1d51bafccb48eb36512b3cd8b1ad3e63737af9b"
+  version = "v1.20.11"
 
 [[projects]]
   digest = "1:cdee563173093e5ae7ab2a19c298e0904129719e1919a3c532b7bb0c3398b818"
@@ -113,11 +113,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:933f3007258e1fcb96a331846c1c17fedd72be246be01e46fb7bbde8dd5fcd5a"
+  digest = "1:38571bee810a5ffa68c9ce275b67a71571955a04193efc23e90ae8e8d39cf8fc"
   name = "github.com/hori-ryota/zaperr"
   packages = ["."]
   pruneopts = "NUT"
-  revision = "acec415b21cb6b6128b945300a6a4095ff2f43c0"
+  revision = "ed848cd624242d02feef1b54bd456859974d2800"
 
 [[projects]]
   digest = "1:1f2aebae7e7c856562355ec0198d8ca2fa222fb05e5b1b66632a1fce39631885"
@@ -136,7 +136,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:19bf45747400f79bddbcad1dfd2c5cea46d1cbf3a65d1246af5e28882590549e"
+  digest = "1:a420f728c3737767d856d36a9f372d25f76dac3ae674a315228687a6f531cb83"
   name = "github.com/nlopes/slack"
   packages = [
     ".",
@@ -146,7 +146,7 @@
     "slackutilsx",
   ]
   pruneopts = "NUT"
-  revision = "a05dfd3f167d3e1d4b58c7412094ac39cb3099ed"
+  revision = "2891986e2a3e7c60d4e660658e3bcd4d69934f4c"
 
 [[projects]]
   digest = "1:f2052f4354e87a0ce0b16b55586b8d34d502d164d56d5d4397afae37f3330c42"
@@ -217,7 +217,7 @@
   name = "golang.org/x/net"
   packages = ["context"]
   pruneopts = "NUT"
-  revision = "3f473d35a33aa6fdd203e306dc439b797820e3f1"
+  revision = "3b0461eec859c4b73bb64fdc8285971fd33e3938"
 
 [[projects]]
   digest = "1:472b7f0500c4dcd855922c379f779f8d4787d2e03ce7ee080cb22b415635b6a8"
