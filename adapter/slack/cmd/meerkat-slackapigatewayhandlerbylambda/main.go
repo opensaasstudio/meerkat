@@ -155,7 +155,7 @@ func main() {
 			httpHandler.HandleSuggestion(w, r)
 		case "/slack/event":
 			httpHandler.HandleEvent(w, r)
-		case "/slack/interactive_component":
+		case "/slack/interactive":
 			httpHandler.HandleInteractiveComponent(w, r)
 		default:
 			return LambdaResponse{

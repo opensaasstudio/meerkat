@@ -67,7 +67,7 @@ Use AppMentionEvent
     - setup path for [./adapter/slack/cmd/meerkat-slackapigatewayhandlerbylambda](./adapter/slack/cmd/meerkat-slackapigatewayhandlerbylambda/main.go)
         - `/slack/suggestion`
         - `/slack/event`
-        - `/slack/interactive_component`
+        - `/slack/interactive`
     - deploy and get public URL
 5. config slack apps
     - Interactive Component
