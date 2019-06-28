@@ -151,7 +151,7 @@ func main() {
 
 	http.HandleFunc("/slack/suggestion", httpHandler.HandleSuggestion)
 	http.HandleFunc("/slack/event", httpHandler.HandleEvent)
-	http.HandleFunc("/slack/interactive_component", httpHandler.HandleInteractiveComponent)
+	http.HandleFunc("/slack/interactive", httpHandler.HandleInteractiveComponent)
 
 	err = http.ListenAndServe(conf.SlackListenAddr, nil)
 	if err != nil {
